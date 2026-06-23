@@ -32,9 +32,11 @@ public class NinjaModel {
     @Column(name = "imgUrl")
     private String imgUrl;
 
+    @Column(name = "rank")
+    private String rank;
+
     // Muitos ninjas podem estar vinculados a uma unica missao.
     @ManyToOne
     @JoinColumn(name = "missoes_id")
     private MissoesModel missoes;
 }
-

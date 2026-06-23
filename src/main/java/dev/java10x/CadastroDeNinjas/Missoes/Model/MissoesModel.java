@@ -28,6 +28,9 @@ public class MissoesModel {
     @Column(name = "dificuldade")
     private String dificuldade;
 
+    @Column(name = "recompensa")
+    private String recompensa;
+
     // O mappedBy deve ter o mesmo nome do atributo em NinjaModel.
     @OneToMany(mappedBy = "missoes")
     private List<NinjaModel> ninjas;
