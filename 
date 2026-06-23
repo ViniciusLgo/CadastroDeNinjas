@@ -1,0 +1,19 @@
+[33mcommit 03976017b0b506d0f3a689833446716ba287edef[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: vinicius <vinicruzlago@gmail.com>
+Date:   Mon Jun 22 20:54:40 2026 -0300
+
+    feat: cria entidade Ninja
+
+[33mcommit 19dcf647ea3042dae2354e417d82e755346a53d2[m
+Author: vinicius <vinicruzlago@gmail.com>
+Date:   Mon Jun 22 20:09:46 2026 -0300
+
+    feat: adiciona endpoint de boas-vindas
+    
+    Closes #1
+
+[33mcommit 9b2291c2f538193a12185cd9ea743e17c69968ee[m
+Author: vinicius <vinicruzlago@gmail.com>
+Date:   Mon Jun 22 18:46:56 2026 -0300
+
+    init do projeto
