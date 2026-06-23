@@ -2,9 +2,17 @@ package dev.java10x.CadastroDeNinjas.Ninjas.Model;
 
 import dev.java10x.CadastroDeNinjas.Missoes.Model.MissoesModel;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "tb_cadastro_de_ninjas")
+@NoArgsConstructor
+@AllArgsConstructor
 public class NinjaModel {
 
     @Id
@@ -21,54 +29,5 @@ public class NinjaModel {
     @ManyToOne
     @JoinColumn(name = "missoes_id")
     private MissoesModel missoes;
-
-    public MissoesModel getMissoes() {
-        return missoes;
-    }
-
-    public void setMissoes(MissoesModel missoes) {
-        this.missoes = missoes;
-    }
-
-    public NinjaModel() {
-    }
-
-    public NinjaModel(String nome, String email, int idade) {
-        this.nome = nome;
-        this.email = email;
-        this.idade = idade;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getIdade() {
-        return idade;
-    }
-
-    public void setIdade(int idade) {
-        this.idade = idade;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 }
 
