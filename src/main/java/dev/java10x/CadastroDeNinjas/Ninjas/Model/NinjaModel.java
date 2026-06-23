@@ -1,5 +1,6 @@
-package dev.java10x.CadastroDeNinjas;
+package dev.java10x.CadastroDeNinjas.Ninjas.Model;
 
+import dev.java10x.CadastroDeNinjas.Missoes.Model.MissoesModel;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,10 +9,26 @@ public class NinjaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
+
     private String nome;
+
     private String email;
+
     private int idade;
+
+    // Muitos ninjas podem estar vinculados a uma unica missao.
+    @ManyToOne
+    @JoinColumn(name = "missoes_id")
+    private MissoesModel missoes;
+
+    public MissoesModel getMissoes() {
+        return missoes;
+    }
+
+    public void setMissoes(MissoesModel missoes) {
+        this.missoes = missoes;
+    }
 
     public NinjaModel() {
     }
