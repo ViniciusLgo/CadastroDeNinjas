@@ -22,42 +22,40 @@ public class NinjaController {
         this.ninjaService = ninjaService;
     }
 
-    // Endpoint simples para confirmar que o controller de ninjas esta respondendo.
+    // Testa se o controller de ninjas esta respondendo.
     @GetMapping("/boasvindas")
     public String boasVindas() {
         System.out.println("Bem vindo");
         return "Bem vindo";
     }
 
-    // POST /ninjas cria um novo ninja.
+    // POST /ninjas - cria um novo ninja.
     @PostMapping
     public String criar() {
         System.out.println("Criando");
         return "Criando ninja";
     }
 
-    // GET /ninjas lista todos os ninjas.
-    @GetMapping
+    // GET /ninjas - lista todos os ninjas cadastrados.
+    @GetMapping("/listar")
     public List<NinjaModel> listarTodosNinjas() {
-        System.out.println("Mostrando");
         return ninjaService.listarTodosNinjas();
     }
 
-    // GET /ninjas/{id} busca um ninja especifico.
-    @GetMapping("/{id}")
-    public String mostrarNinjaPorId(@PathVariable Long id) {
-        System.out.println("Mostrando ninja por ID: " + id);
-        return "Mostrando ninja por ID: " + id;
+    //(id)  GET /ninjas/{id} - busca um ninja especifico pelo ID.
+    @GetMapping("/listar/{id}")
+    public NinjaModel mostrarNinjaPorId(@PathVariable Long id) {
+        return ninjaService.mostrarNinjasPorId(id);
     }
 
-    // PUT /ninjas/{id} atualiza todos os dados de um ninja.
+    // PUT /ninjas/{id} - atualiza todos os dados de um ninja.
     @PutMapping("/{id}")
     public String alterarNinjaPorId(@PathVariable Long id) {
         System.out.println("Alterando ninja por ID: " + id);
         return "Alterando ninja por ID: " + id;
     }
 
-    // DELETE /ninjas/{id} remove um ninja especifico.
+    // DELETE /ninjas/{id} - remove um ninja especifico.
     @DeleteMapping("/{id}")
     public String deletarNinjaPorId(@PathVariable Long id) {
         System.out.println("Deletando ninja por ID: " + id);

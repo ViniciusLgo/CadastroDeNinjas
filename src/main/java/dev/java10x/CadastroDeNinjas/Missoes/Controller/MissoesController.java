@@ -1,5 +1,7 @@
 package dev.java10x.CadastroDeNinjas.Missoes.Controller;
 
+import dev.java10x.CadastroDeNinjas.Missoes.Model.MissoesModel;
+import dev.java10x.CadastroDeNinjas.Missoes.Service.MissoesService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,9 +10,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/missoes")
 public class MissoesController {
+
+    private final MissoesService missoesService;
+
+    public MissoesController(MissoesService missoesService) {
+        this.missoesService = missoesService;
+    }
 
     // Endpoint simples para confirmar que o controller de missoes esta respondendo.
     @GetMapping("/boasvindas")
@@ -27,17 +37,15 @@ public class MissoesController {
     }
 
     // GET /missoes lista todas as missoes.
-    @GetMapping
-    public String mostrarTodasMissoes() {
-        System.out.println("Mostrando missoes");
-        return "Mostrando missoes";
+    @GetMapping("/listar")
+    public List<MissoesModel> mostrarTodasMissoes() {
+        return missoesService.listarMissoes();
     }
 
     // GET /missoes/{id} busca uma missao especifica.
-    @GetMapping("/{id}")
-    public String mostrarMissaoPorId(@PathVariable Long id) {
-        System.out.println("Mostrando missao por ID: " + id);
-        return "Mostrando missao por ID: " + id;
+    @GetMapping("/listar/{id}")
+    public MissoesModel mostrarMissoesPorId(@PathVariable Long id) {
+        return missoesService.listarMissoesById(id);
     }
 
     // PUT /missoes/{id} atualiza todos os dados de uma missao.
