@@ -27,4 +27,9 @@ public class MissoesService {
         Optional<MissoesModel> missoesPorId = missoesRepository.findById(id);
         return missoesPorId.orElse(null);
     }
+
+    // Remove uma missao pelo ID usando o metodo pronto do JpaRepository.
+    public void deletarMissoesPorId(Long id) {
+        missoesRepository.deleteById(id);
+    }
 }

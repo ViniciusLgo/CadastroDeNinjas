@@ -56,10 +56,9 @@ public class MissoesController {
         return "Alterando missao por ID: " + id;
     }
 
-    // DELETE /missoes/{id} - prepara o endpoint responsavel por remover uma missao existente.
-    @DeleteMapping("/{id}")
-    public String deletarMissaoPorId(@PathVariable Long id) {
-        System.out.println("Deletando missao por ID: " + id);
-        return "Deletando missao por ID: " + id;
+    // DELETE /missoes/deletar/{id} - remove uma missao existente pelo ID informado na URL.
+    @DeleteMapping("/deletar/{id}")
+    public void deletarMissaoPorId(@PathVariable Long id) {
+        missoesService.deletarMissoesPorId(id);
     }
 }
