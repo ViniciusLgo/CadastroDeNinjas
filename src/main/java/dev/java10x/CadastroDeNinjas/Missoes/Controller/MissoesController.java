@@ -18,44 +18,45 @@ public class MissoesController {
 
     private final MissoesService missoesService;
 
+    // Recebe o service pelo construtor para o controller poder chamar as regras de missoes.
     public MissoesController(MissoesService missoesService) {
         this.missoesService = missoesService;
     }
 
-    // Endpoint simples para confirmar que o controller de missoes esta respondendo.
+    // Endpoint de teste para confirmar que as rotas de missoes estao respondendo.
     @GetMapping("/boasvindas")
     public String boasVindasMissoes() {
         System.out.println("Bem vindo");
         return "Bem vindo";
     }
 
-    // POST /missoes cria uma nova missao.
+    // POST /missoes - prepara o endpoint responsavel por criar uma nova missao.
     @PostMapping
     public String criarMissoes() {
         System.out.println("Criando missao");
         return "Criando missao";
     }
 
-    // GET /missoes lista todas as missoes.
+    // GET /missoes/listar - retorna todas as missoes cadastradas no banco.
     @GetMapping("/listar")
     public List<MissoesModel> mostrarTodasMissoes() {
         return missoesService.listarMissoes();
     }
 
-    // GET /missoes/{id} busca uma missao especifica.
+    // GET /missoes/listar/{id} - retorna uma missao especifica a partir do ID informado na URL.
     @GetMapping("/listar/{id}")
     public MissoesModel mostrarMissoesPorId(@PathVariable Long id) {
         return missoesService.listarMissoesById(id);
     }
 
-    // PUT /missoes/{id} atualiza todos os dados de uma missao.
+    // PUT /missoes/{id} - prepara o endpoint responsavel por atualizar uma missao existente.
     @PutMapping("/{id}")
     public String alterarMissaoPorId(@PathVariable Long id) {
         System.out.println("Alterando missao por ID: " + id);
         return "Alterando missao por ID: " + id;
     }
 
-    // DELETE /missoes/{id} remove uma missao especifica.
+    // DELETE /missoes/{id} - prepara o endpoint responsavel por remover uma missao existente.
     @DeleteMapping("/{id}")
     public String deletarMissaoPorId(@PathVariable Long id) {
         System.out.println("Deletando missao por ID: " + id);

@@ -18,11 +18,13 @@ import java.util.List;
 @AllArgsConstructor
 public class MissoesModel {
 
+    // Identificador unico da missao. O banco gera esse valor automaticamente.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
+    // Dados principais da missao cadastrados na tabela tb_missoes.
     @Column(name = "nome")
     private String nome;
 
@@ -32,11 +34,13 @@ public class MissoesModel {
     @Column(name = "recompensa")
     private String recompensa;
 
-    // O mappedBy deve ter o mesmo nome do atributo em NinjaModel.
+    // Relacionamento um-para-muitos: uma missao pode possuir varios ninjas.
+    // O mappedBy deve ter o mesmo nome do atributo que existe em NinjaModel.
     @OneToMany(mappedBy = "missoes")
     @JsonIgnore
     private List<NinjaModel> ninjas;
 
+    // Construtor auxiliar usado quando a recompensa nao precisa ser informada.
     public MissoesModel(Long id, String nome, String dificuldade) {
         this.id = id;
         this.nome = nome;

@@ -12,16 +12,17 @@ public class MissoesService {
 
     private final MissoesRepository missoesRepository;
 
+    // Recebe o repository pelo construtor para o service acessar os dados de missoes.
     public MissoesService(MissoesRepository missoesRepository) {
         this.missoesRepository = missoesRepository;
     }
 
-    // Lista todas as missoes cadastradas.
+    // Busca no banco todas as missoes cadastradas.
     public List<MissoesModel> listarMissoes() {
         return missoesRepository.findAll();
     }
 
-    // Busca uma missao pelo ID. Por enquanto retorna null quando nao encontrar.
+    // Busca uma missao pelo ID. Se nao encontrar, retorna null por enquanto.
     public MissoesModel listarMissoesById(Long id) {
         Optional<MissoesModel> missoesPorId = missoesRepository.findById(id);
         return missoesPorId.orElse(null);

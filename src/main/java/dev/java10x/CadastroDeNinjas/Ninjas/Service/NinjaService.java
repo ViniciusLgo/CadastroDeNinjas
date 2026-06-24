@@ -12,18 +12,24 @@ public class NinjaService {
 
     private final NinjaRepository ninjaRepository;
 
+    // Recebe o repository pelo construtor para o service acessar os dados de ninjas.
     public NinjaService(NinjaRepository ninjaRepository) {
         this.ninjaRepository = ninjaRepository;
     }
 
-    // Lista todos os ninjas cadastrados.
+    // Busca no banco todos os ninjas cadastrados.
     public List<NinjaModel> listarTodosNinjas() {
         return ninjaRepository.findAll();
     }
 
-    // Busca um ninja pelo ID. Por enquanto retorna null quando nao encontrar.
+    // Busca um ninja pelo ID. Se nao encontrar, retorna null por enquanto.
     public NinjaModel mostrarNinjasPorId(Long id) {
         Optional<NinjaModel> ninjaPorId = ninjaRepository.findById(id);
         return ninjaPorId.orElse(null);
+    }
+
+    // criar um ninja
+    public NinjaModel criarNinja(NinjaModel ninjamodel) {
+        return ninjaRepository.save(ninjamodel);
     }
 }

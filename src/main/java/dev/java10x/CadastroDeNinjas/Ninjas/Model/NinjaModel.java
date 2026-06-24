@@ -15,11 +15,13 @@ import lombok.Setter;
 @AllArgsConstructor
 public class NinjaModel {
 
+    // Identificador unico do ninja. O banco gera esse valor automaticamente.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
+    // Dados principais do ninja cadastrados na tabela tb_cadastro_de_ninjas.
     @Column(name = "nome")
     private String nome;
 
@@ -35,7 +37,7 @@ public class NinjaModel {
     @Column(name = "rank")
     private String rank;
 
-    // Muitos ninjas podem estar vinculados a uma unica missao.
+    // Relacionamento muitos-para-um: varios ninjas podem estar vinculados a uma unica missao.
     @ManyToOne
     @JoinColumn(name = "missoes_id")
     private MissoesModel missoes;
