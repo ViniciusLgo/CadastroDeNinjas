@@ -1,5 +1,6 @@
 package dev.java10x.CadastroDeNinjas.Missoes.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.java10x.CadastroDeNinjas.Ninjas.Model.NinjaModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,7 @@ public class MissoesModel {
 
     // O mappedBy deve ter o mesmo nome do atributo em NinjaModel.
     @OneToMany(mappedBy = "missoes")
+    @JsonIgnore
     private List<NinjaModel> ninjas;
 
     public MissoesModel(Long id, String nome, String dificuldade) {

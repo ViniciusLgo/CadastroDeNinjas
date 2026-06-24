@@ -1,5 +1,7 @@
 package dev.java10x.CadastroDeNinjas.Ninjas.Controller;
 
+import dev.java10x.CadastroDeNinjas.Ninjas.Model.NinjaModel;
+import dev.java10x.CadastroDeNinjas.Ninjas.Service.NinjaService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,9 +10,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/ninjas")
 public class NinjaController {
+
+    private final NinjaService ninjaService;
+
+    public NinjaController(NinjaService ninjaService) {
+        this.ninjaService = ninjaService;
+    }
 
     // Endpoint simples para confirmar que o controller de ninjas esta respondendo.
     @GetMapping("/boasvindas")
@@ -28,9 +38,9 @@ public class NinjaController {
 
     // GET /ninjas lista todos os ninjas.
     @GetMapping
-    public String mostrarTodosOsNinjas() {
+    public List<NinjaModel> listarTodosNinjas() {
         System.out.println("Mostrando");
-        return "Mostrando ninjas";
+        return ninjaService.listarTodosNinjas();
     }
 
     // GET /ninjas/{id} busca um ninja especifico.
