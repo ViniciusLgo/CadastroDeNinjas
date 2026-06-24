@@ -50,10 +50,9 @@ public class NinjaController {
         return "Alterando ninja por ID: " + id;
     }
 
-    // DELETE /ninjas/{id} - prepara o endpoint responsavel por remover um ninja existente.
-    @DeleteMapping("/{id}")
-    public String deletarNinjaPorId(@PathVariable Long id) {
-        System.out.println("Deletando ninja por ID: " + id);
-        return "Deletando ninja por ID: " + id;
+    // DELETE /ninjas/deletar/{id} - remove um ninja existente pelo ID informado na URL.
+    @DeleteMapping("/deletar/{id}")
+    public void deletarNinjaPorId(@PathVariable Long id) {
+        ninjaService.deleteNinjaById(id);
     }
 }

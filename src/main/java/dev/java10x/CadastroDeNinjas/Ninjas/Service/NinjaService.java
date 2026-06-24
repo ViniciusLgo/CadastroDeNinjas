@@ -28,8 +28,13 @@ public class NinjaService {
         return ninjaPorId.orElse(null);
     }
 
-    // criar um ninja
+    // Salva um novo ninja no banco.
     public NinjaModel criarNinja(NinjaModel ninjamodel) {
         return ninjaRepository.save(ninjamodel);
+    }
+
+    // Remove um ninja pelo ID usando o metodo pronto do JpaRepository.
+    public void deleteNinjaById(Long id) {
+        ninjaRepository.deleteById(id);
     }
 }
