@@ -1,14 +1,8 @@
 package dev.java10x.CadastroDeNinjas.Missoes.Controller;
 
-import dev.java10x.CadastroDeNinjas.Missoes.Model.MissoesModel;
+import dev.java10x.CadastroDeNinjas.Missoes.DTO.MissoesDTO;
 import dev.java10x.CadastroDeNinjas.Missoes.Service.MissoesService;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,30 +24,29 @@ public class MissoesController {
         return "Bem vindo";
     }
 
-    // POST /missoes - prepara o endpoint responsavel por criar uma nova missao.
+    // POST /missoes - recebe um DTO, cria uma nova missao e devolve os dados salvos.
     @PostMapping
-    public String criarMissoes() {
+    public MissoesDTO criarMissoes(@RequestBody MissoesDTO missoesDTO) {
         System.out.println("Criando missao");
-        return "Criando missao";
+        return missoesService.criarMissoes(missoesDTO);
     }
 
     // GET /missoes/listar - retorna todas as missoes cadastradas no banco.
     @GetMapping("/listar")
-    public List<MissoesModel> mostrarTodasMissoes() {
+    public List<MissoesDTO> mostrarTodasMissoes() {
         return missoesService.listarMissoes();
     }
 
     // GET /missoes/listar/{id} - retorna uma missao especifica a partir do ID informado na URL.
     @GetMapping("/listar/{id}")
-    public MissoesModel mostrarMissoesPorId(@PathVariable Long id) {
+    public MissoesDTO mostrarMissoesPorId(@PathVariable Long id) {
         return missoesService.listarMissoesById(id);
     }
 
-    // PUT /missoes/{id} - prepara o endpoint responsavel por atualizar uma missao existente.
-    @PutMapping("/{id}")
-    public String alterarMissaoPorId(@PathVariable Long id) {
-        System.out.println("Alterando missao por ID: " + id);
-        return "Alterando missao por ID: " + id;
+    // PUT /missoes/alterar/{id} - atualiza todos os dados de uma missao existente.
+    @PutMapping("/alterar/{id}")
+    public MissoesDTO alterarMissaoPorId(@PathVariable Long id, @RequestBody MissoesDTO missoesAtualizado) {
+        return missoesService.alterarMissoesPorId(id, missoesAtualizado);
     }
 
     // DELETE /missoes/deletar/{id} - remove uma missao existente pelo ID informado na URL.
