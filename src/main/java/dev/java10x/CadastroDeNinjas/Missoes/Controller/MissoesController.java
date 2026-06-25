@@ -24,11 +24,11 @@ public class MissoesController {
         return "Bem vindo";
     }
 
-    // POST /missoes - prepara o endpoint responsavel por criar uma nova missao.
+    // POST /missoes - recebe um DTO, cria uma nova missao e devolve os dados salvos.
     @PostMapping
-    public String criarMissoes() {
+    public MissoesDTO criarMissoes(@RequestBody MissoesDTO missoesDTO) {
         System.out.println("Criando missao");
-        return "Criando missao";
+        return missoesService.criarMissoes(missoesDTO);
     }
 
     // GET /missoes/listar - retorna todas as missoes cadastradas no banco.

@@ -36,6 +36,13 @@ public class MissoesService {
         return missoesPorId.map(missoesMapper::map).orElse(null);
     }
 
+    // Converte o DTO recebido, salva a missao no banco e devolve a resposta tambem em DTO.
+    public MissoesDTO criarMissoes(MissoesDTO missoesDTO) {
+        MissoesModel missoesModel = missoesMapper.map(missoesDTO);
+        MissoesModel missoesSalva = missoesRepository.save(missoesModel);
+        return missoesMapper.map(missoesSalva);
+    }
+
     // Remove uma missao pelo ID usando o metodo pronto do JpaRepository.
     public void deletarMissoesPorId(Long id) {
         missoesRepository.deleteById(id);
