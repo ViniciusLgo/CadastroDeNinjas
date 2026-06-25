@@ -1,14 +1,12 @@
 package dev.java10x.CadastroDeNinjas.Missoes.DTO;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class MissoesDTO {
 
     // DTO usado para transportar os dados da missao sem expor diretamente a entidade JPA.

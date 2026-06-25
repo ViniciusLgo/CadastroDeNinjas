@@ -2,25 +2,13 @@ package dev.java10x.CadastroDeNinjas.Missoes.Mapper;
 
 import dev.java10x.CadastroDeNinjas.Missoes.DTO.MissoesDTO;
 import dev.java10x.CadastroDeNinjas.Missoes.Model.MissoesModel;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MissoesMapper {
 
-    // Converte a entidade de missao para DTO, evitando expor relacionamentos internos da JPA.
-    public static MissoesDTO toDTO(MissoesModel missoesModel) {
-        if (missoesModel == null) {
-            return null;
-        }
-
-        return new MissoesDTO(
-                missoesModel.getId(),
-                missoesModel.getNome(),
-                missoesModel.getDificuldade(),
-                missoesModel.getRecompensa()
-        );
-    }
-
     // Converte o DTO recebido pela API para a entidade usada pelo repository.
-    public static MissoesModel toModel(MissoesDTO missoesDTO) {
+    public MissoesModel map(MissoesDTO missoesDTO) {
         if (missoesDTO == null) {
             return null;
         }
@@ -30,7 +18,20 @@ public class MissoesMapper {
         missoesModel.setNome(missoesDTO.getNome());
         missoesModel.setDificuldade(missoesDTO.getDificuldade());
         missoesModel.setRecompensa(missoesDTO.getRecompensa());
-
         return missoesModel;
+    }
+
+    // Converte a entidade salva no banco para DTO antes de devolver a resposta da API.
+    public MissoesDTO map(MissoesModel missoesModel) {
+        if (missoesModel == null) {
+            return null;
+        }
+
+        MissoesDTO missoesDTO = new MissoesDTO();
+        missoesDTO.setId(missoesModel.getId());
+        missoesDTO.setNome(missoesModel.getNome());
+        missoesDTO.setDificuldade(missoesModel.getDificuldade());
+        missoesDTO.setRecompensa(missoesModel.getRecompensa());
+        return missoesDTO;
     }
 }

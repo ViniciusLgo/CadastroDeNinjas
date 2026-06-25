@@ -1,6 +1,6 @@
 package dev.java10x.CadastroDeNinjas.Ninjas.Controller;
 
-import dev.java10x.CadastroDeNinjas.Ninjas.Model.NinjaModel;
+import dev.java10x.CadastroDeNinjas.Ninjas.DTO.NinjaDTO;
 import dev.java10x.CadastroDeNinjas.Ninjas.Service.NinjaService;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,28 +24,28 @@ public class NinjaController {
         return "Bem vindo";
     }
 
-    // POST /ninjas - prepara o endpoint responsavel por criar um novo ninja.
+    // POST /ninjas/criar - recebe um DTO, cria um novo ninja e devolve os dados salvos.
     @PostMapping("/criar")
-    public NinjaModel criar(@RequestBody NinjaModel ninjaModel) {
+    public NinjaDTO criar(@RequestBody NinjaDTO ninjaDTO) {
         System.out.println("Criando");
-        return ninjaService.criarNinja(ninjaModel);
+        return ninjaService.criarNinja(ninjaDTO);
     }
 
     // GET /ninjas/listar - retorna todos os ninjas cadastrados no banco.
     @GetMapping("/listar")
-    public List<NinjaModel> listarTodosNinjas() {
+    public List<NinjaDTO> listarTodosNinjas() {
         return ninjaService.listarTodosNinjas();
     }
 
     // GET /ninjas/listar/{id} - retorna um ninja especifico a partir do ID informado na URL.
     @GetMapping("/listar/{id}")
-    public NinjaModel mostrarNinjaPorId(@PathVariable Long id) {
+    public NinjaDTO mostrarNinjaPorId(@PathVariable Long id) {
         return ninjaService.mostrarNinjasPorId(id);
     }
 
     // PUT /ninjas/alterar/{id} - atualiza todos os dados de um ninja existente.
     @PutMapping("/alterar/{id}")
-    public NinjaModel alterarNinjaPorId(@PathVariable Long id, @RequestBody NinjaModel ninjaAtualizado) {
+    public NinjaDTO alterarNinjaPorId(@PathVariable Long id, @RequestBody NinjaDTO ninjaAtualizado) {
         return ninjaService.alterarNinja(id, ninjaAtualizado);
     }
 

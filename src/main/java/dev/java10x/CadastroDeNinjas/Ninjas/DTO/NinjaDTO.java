@@ -1,14 +1,12 @@
 package dev.java10x.CadastroDeNinjas.Ninjas.DTO;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class NinjaDTO {
 
     // DTO usado para transportar os dados do ninja sem expor diretamente a entidade JPA.

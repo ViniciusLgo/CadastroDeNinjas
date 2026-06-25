@@ -3,33 +3,13 @@ package dev.java10x.CadastroDeNinjas.Ninjas.Mapper;
 import dev.java10x.CadastroDeNinjas.Missoes.Model.MissoesModel;
 import dev.java10x.CadastroDeNinjas.Ninjas.DTO.NinjaDTO;
 import dev.java10x.CadastroDeNinjas.Ninjas.Model.NinjaModel;
+import org.springframework.stereotype.Component;
 
+@Component
 public class NinjaMapper {
 
-    // Converte a entidade de ninja para DTO, levando apenas dados simples da missao vinculada.
-    public static NinjaDTO toDTO(NinjaModel ninjaModel) {
-        if (ninjaModel == null) {
-            return null;
-        }
-
-        MissoesModel missoesModel = ninjaModel.getMissoes();
-        Long missoesId = missoesModel != null ? missoesModel.getId() : null;
-        String missoesNome = missoesModel != null ? missoesModel.getNome() : null;
-
-        return new NinjaDTO(
-                ninjaModel.getId(),
-                ninjaModel.getNome(),
-                ninjaModel.getEmail(),
-                ninjaModel.getIdade(),
-                ninjaModel.getImgUrl(),
-                ninjaModel.getRank(),
-                missoesId,
-                missoesNome
-        );
-    }
-
     // Converte o DTO recebido pela API para a entidade usada pelo repository.
-    public static NinjaModel toModel(NinjaDTO ninjaDTO) {
+    public NinjaModel map(NinjaDTO ninjaDTO) {
         if (ninjaDTO == null) {
             return null;
         }
@@ -49,5 +29,27 @@ public class NinjaMapper {
         }
 
         return ninjaModel;
+    }
+
+    // Converte a entidade salva no banco para DTO antes de devolver a resposta da API.
+    public NinjaDTO map(NinjaModel ninjaModel) {
+        if (ninjaModel == null) {
+            return null;
+        }
+
+        NinjaDTO ninjaDTO = new NinjaDTO();
+        ninjaDTO.setId(ninjaModel.getId());
+        ninjaDTO.setNome(ninjaModel.getNome());
+        ninjaDTO.setEmail(ninjaModel.getEmail());
+        ninjaDTO.setIdade(ninjaModel.getIdade());
+        ninjaDTO.setImgUrl(ninjaModel.getImgUrl());
+        ninjaDTO.setRank(ninjaModel.getRank());
+
+        if (ninjaModel.getMissoes() != null) {
+            ninjaDTO.setMissoesId(ninjaModel.getMissoes().getId());
+            ninjaDTO.setMissoesNome(ninjaModel.getMissoes().getNome());
+        }
+
+        return ninjaDTO;
     }
 }

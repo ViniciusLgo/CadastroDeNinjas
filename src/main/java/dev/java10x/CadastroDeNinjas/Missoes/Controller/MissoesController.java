@@ -1,6 +1,6 @@
 package dev.java10x.CadastroDeNinjas.Missoes.Controller;
 
-import dev.java10x.CadastroDeNinjas.Missoes.Model.MissoesModel;
+import dev.java10x.CadastroDeNinjas.Missoes.DTO.MissoesDTO;
 import dev.java10x.CadastroDeNinjas.Missoes.Service.MissoesService;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,19 +33,19 @@ public class MissoesController {
 
     // GET /missoes/listar - retorna todas as missoes cadastradas no banco.
     @GetMapping("/listar")
-    public List<MissoesModel> mostrarTodasMissoes() {
+    public List<MissoesDTO> mostrarTodasMissoes() {
         return missoesService.listarMissoes();
     }
 
     // GET /missoes/listar/{id} - retorna uma missao especifica a partir do ID informado na URL.
     @GetMapping("/listar/{id}")
-    public MissoesModel mostrarMissoesPorId(@PathVariable Long id) {
+    public MissoesDTO mostrarMissoesPorId(@PathVariable Long id) {
         return missoesService.listarMissoesById(id);
     }
 
     // PUT /missoes/alterar/{id} - atualiza todos os dados de uma missao existente.
     @PutMapping("/alterar/{id}")
-    public MissoesModel alterarMissaoPorId(@PathVariable Long id, @RequestBody MissoesModel missoesAtualizado) {
+    public MissoesDTO alterarMissaoPorId(@PathVariable Long id, @RequestBody MissoesDTO missoesAtualizado) {
         return missoesService.alterarMissoesPorId(id, missoesAtualizado);
     }
 
