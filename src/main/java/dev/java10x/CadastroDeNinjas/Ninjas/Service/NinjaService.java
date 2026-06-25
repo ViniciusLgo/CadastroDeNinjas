@@ -37,4 +37,15 @@ public class NinjaService {
     public void deleteNinjaById(Long id) {
         ninjaRepository.deleteById(id);
     }
+
+    // Atualiza todos os dados de um ninja existente.
+    // TODO: refinar este metodo para permitir alteracoes parciais no PUT,
+    // mantendo os valores atuais quando algum campo nao vier no JSON.
+    public NinjaModel alterarNinja(Long id, NinjaModel ninjaAtualizado) {
+        if (ninjaRepository.existsById(id)) {
+            ninjaAtualizado.setId(id);
+            return ninjaRepository.save(ninjaAtualizado);
+        }
+        return null;
+    }
 }

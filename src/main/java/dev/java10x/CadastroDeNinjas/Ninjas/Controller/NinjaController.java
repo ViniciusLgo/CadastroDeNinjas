@@ -43,11 +43,10 @@ public class NinjaController {
         return ninjaService.mostrarNinjasPorId(id);
     }
 
-    // PUT /ninjas/{id} - prepara o endpoint responsavel por atualizar um ninja existente.
-    @PutMapping("/{id}")
-    public String alterarNinjaPorId(@PathVariable Long id) {
-        System.out.println("Alterando ninja por ID: " + id);
-        return "Alterando ninja por ID: " + id;
+    // PUT /ninjas/alterar/{id} - atualiza todos os dados de um ninja existente.
+    @PutMapping("/alterar/{id}")
+    public NinjaModel alterarNinjaPorId(@PathVariable Long id, @RequestBody NinjaModel ninjaAtualizado) {
+        return ninjaService.alterarNinja(id, ninjaAtualizado);
     }
 
     // DELETE /ninjas/deletar/{id} - remove um ninja existente pelo ID informado na URL.
