@@ -32,4 +32,14 @@ public class MissoesService {
     public void deletarMissoesPorId(Long id) {
         missoesRepository.deleteById(id);
     }
+
+    // Atualiza todos os dados de uma missao existente.
+    public MissoesModel alterarMissoesPorId(Long id, MissoesModel missoesAtualizado) {
+        if (missoesRepository.existsById(id)) {
+            missoesAtualizado.setId(id);
+            return missoesRepository.save(missoesAtualizado);
+        }
+
+        return null;
+    }
 }

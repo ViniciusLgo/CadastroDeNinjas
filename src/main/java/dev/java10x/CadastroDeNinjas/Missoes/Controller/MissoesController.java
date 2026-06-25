@@ -2,13 +2,7 @@ package dev.java10x.CadastroDeNinjas.Missoes.Controller;
 
 import dev.java10x.CadastroDeNinjas.Missoes.Model.MissoesModel;
 import dev.java10x.CadastroDeNinjas.Missoes.Service.MissoesService;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -49,11 +43,10 @@ public class MissoesController {
         return missoesService.listarMissoesById(id);
     }
 
-    // PUT /missoes/{id} - prepara o endpoint responsavel por atualizar uma missao existente.
-    @PutMapping("/{id}")
-    public String alterarMissaoPorId(@PathVariable Long id) {
-        System.out.println("Alterando missao por ID: " + id);
-        return "Alterando missao por ID: " + id;
+    // PUT /missoes/alterar/{id} - atualiza todos os dados de uma missao existente.
+    @PutMapping("/alterar/{id}")
+    public MissoesModel alterarMissaoPorId(@PathVariable Long id, @RequestBody MissoesModel missoesAtualizado) {
+        return missoesService.alterarMissoesPorId(id, missoesAtualizado);
     }
 
     // DELETE /missoes/deletar/{id} - remove uma missao existente pelo ID informado na URL.
