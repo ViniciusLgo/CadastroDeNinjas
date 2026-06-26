@@ -3,6 +3,7 @@ package dev.java10x.CadastroDeNinjas.Ninjas.Controller;
 import dev.java10x.CadastroDeNinjas.Missoes.Service.MissoesService;
 import dev.java10x.CadastroDeNinjas.Ninjas.DTO.NinjaDTO;
 import dev.java10x.CadastroDeNinjas.Ninjas.Service.NinjaService;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/ninjas/ui")
+@Hidden
 public class NinjaControllerUI {
 
     private final NinjaService ninjaService;
