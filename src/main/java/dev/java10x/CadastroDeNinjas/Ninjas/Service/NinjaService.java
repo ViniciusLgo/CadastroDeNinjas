@@ -16,12 +16,15 @@ public class NinjaService {
     private final NinjaRepository ninjaRepository;
     private final NinjaMapper ninjaMapper;
 
+    // O service recebe repository e mapper pelo construtor.
+    // Repository trabalha com Model; mapper faz a ponte entre Model e DTO.
     public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper) {
         this.ninjaRepository = ninjaRepository;
         this.ninjaMapper = ninjaMapper;
     }
 
     // Busca no banco todos os ninjas cadastrados e converte cada entidade para DTO.
+    // O Model fica dentro do service/repository; para o controller sair, devolvemos List<NinjaDTO>.
     public List<NinjaDTO> listarTodosNinjas() {
         return ninjaRepository.findAll()
                 .stream()
@@ -29,13 +32,13 @@ public class NinjaService {
                 .collect(Collectors.toList());
     }
 
-    // Busca um ninja pelo ID. Se nao encontrar, retorna null por enquanto.
+    // Busca um ninja pelo ID. Se nao encontrar, retorna null para o controller transformar em 404.
     public NinjaDTO mostrarNinjasPorId(Long id) {
         Optional<NinjaModel> ninjaPorId = ninjaRepository.findById(id);
         return ninjaPorId.map(ninjaMapper::map).orElse(null);
     }
 
-    // Converte o DTO recebido, salva o ninja no banco e devolve a resposta tambem em DTO.
+    // Converte o DTO recebido, salva o ninja no banco como Model e devolve a resposta tambem em DTO.
     public NinjaDTO criarNinja(NinjaDTO ninjaDTO) {
         NinjaModel ninja = ninjaMapper.map(ninjaDTO);
         NinjaModel ninjaSalvo = ninjaRepository.save(ninja);
@@ -48,6 +51,7 @@ public class NinjaService {
     }
 
     // Atualiza todos os dados de um ninja existente.
+    // Entrada e saida continuam DTO; Model aparece apenas na hora de salvar no repository.
     // TODO: refinar este metodo para permitir alteracoes parciais no PUT,
     // mantendo os valores atuais quando algum campo nao vier no JSON.
     public NinjaDTO alterarNinja(Long id, NinjaDTO ninjaAtualizado) {

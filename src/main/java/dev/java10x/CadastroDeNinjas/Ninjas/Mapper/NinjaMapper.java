@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 public class NinjaMapper {
 
     // Converte o DTO recebido pela API para a entidade usada pelo repository.
+    // Aqui o DTO "sai" e vira Model porque o repository so sabe salvar entidades JPA.
     public NinjaModel map(NinjaDTO ninjaDTO) {
         if (ninjaDTO == null) {
             return null;
@@ -32,6 +33,7 @@ public class NinjaMapper {
     }
 
     // Converte a entidade salva no banco para DTO antes de devolver a resposta da API.
+    // Aqui o Model "sai" e vira DTO porque o controller deve devolver JSON sem expor a entidade JPA.
     public NinjaDTO map(NinjaModel ninjaModel) {
         if (ninjaModel == null) {
             return null;

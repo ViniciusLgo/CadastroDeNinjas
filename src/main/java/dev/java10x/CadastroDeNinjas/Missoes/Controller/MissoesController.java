@@ -2,6 +2,8 @@ package dev.java10x.CadastroDeNinjas.Missoes.Controller;
 
 import dev.java10x.CadastroDeNinjas.Missoes.DTO.MissoesDTO;
 import dev.java10x.CadastroDeNinjas.Missoes.Service.MissoesService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,41 +19,57 @@ public class MissoesController {
         this.missoesService = missoesService;
     }
 
-    // Endpoint de teste para confirmar que as rotas de missoes estao respondendo.
+    // Endpoint de teste. Usa ResponseEntity para devolver o texto junto com status HTTP 200.
     @GetMapping("/boasvindas")
-    public String boasVindasMissoes() {
+    public ResponseEntity<String> boasVindasMissoes() {
         System.out.println("Bem vindo");
-        return "Bem vindo";
+        return ResponseEntity.ok("Bem vindo");
     }
 
-    // POST /missoes - recebe um DTO, cria uma nova missao e devolve os dados salvos.
+    // POST /missoes - recebe MissoesDTO, salva como MissoesModel no service e devolve DTO com status 201.
+    // DTO fica na entrada/saida da API; Model fica escondido no service, mapper e repository.
     @PostMapping
-    public MissoesDTO criarMissoes(@RequestBody MissoesDTO missoesDTO) {
+    public ResponseEntity<MissoesDTO> criarMissoes(@RequestBody MissoesDTO missoesDTO) {
         System.out.println("Criando missao");
-        return missoesService.criarMissoes(missoesDTO);
+        MissoesDTO novaMissao = missoesService.criarMissoes(missoesDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novaMissao);
     }
 
-    // GET /missoes/listar - retorna todas as missoes cadastradas no banco.
+    // GET /missoes/listar - devolve lista de MissoesDTO para nao expor a entidade MissoesModel no JSON.
     @GetMapping("/listar")
-    public List<MissoesDTO> mostrarTodasMissoes() {
-        return missoesService.listarMissoes();
+    public ResponseEntity<List<MissoesDTO>> mostrarTodasMissoes() {
+        List<MissoesDTO> missoes = missoesService.listarMissoes();
+        return ResponseEntity.ok(missoes);
     }
 
-    // GET /missoes/listar/{id} - retorna uma missao especifica a partir do ID informado na URL.
+    // GET /missoes/listar/{id} - se o service encontrar, devolve MissoesDTO com 200; se nao, devolve 404.
     @GetMapping("/listar/{id}")
-    public MissoesDTO mostrarMissoesPorId(@PathVariable Long id) {
-        return missoesService.listarMissoesById(id);
+    public ResponseEntity<MissoesDTO> mostrarMissoesPorId(@PathVariable Long id) {
+        MissoesDTO missao = missoesService.listarMissoesById(id);
+
+        if (missao == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(missao);
     }
 
-    // PUT /missoes/alterar/{id} - atualiza todos os dados de uma missao existente.
+    // PUT /missoes/alterar/{id} - recebe MissoesDTO, atualiza o registro e devolve DTO atualizado com 200.
     @PutMapping("/alterar/{id}")
-    public MissoesDTO alterarMissaoPorId(@PathVariable Long id, @RequestBody MissoesDTO missoesAtualizado) {
-        return missoesService.alterarMissoesPorId(id, missoesAtualizado);
+    public ResponseEntity<MissoesDTO> alterarMissaoPorId(@PathVariable Long id, @RequestBody MissoesDTO missoesAtualizado) {
+        MissoesDTO missao = missoesService.alterarMissoesPorId(id, missoesAtualizado);
+
+        if (missao == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(missao);
     }
 
-    // DELETE /missoes/deletar/{id} - remove uma missao existente pelo ID informado na URL.
+    // DELETE /missoes/deletar/{id} - remove a missao e devolve 204, indicando sucesso sem corpo de resposta.
     @DeleteMapping("/deletar/{id}")
-    public void deletarMissaoPorId(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarMissaoPorId(@PathVariable Long id) {
         missoesService.deletarMissoesPorId(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class MissoesMapper {
 
     // Converte o DTO recebido pela API para a entidade usada pelo repository.
+    // Aqui o DTO "sai" e vira Model porque o repository so sabe salvar entidades JPA.
     public MissoesModel map(MissoesDTO missoesDTO) {
         if (missoesDTO == null) {
             return null;
@@ -22,6 +23,7 @@ public class MissoesMapper {
     }
 
     // Converte a entidade salva no banco para DTO antes de devolver a resposta da API.
+    // Aqui o Model "sai" e vira DTO porque o controller deve devolver JSON sem expor a entidade JPA.
     public MissoesDTO map(MissoesModel missoesModel) {
         if (missoesModel == null) {
             return null;

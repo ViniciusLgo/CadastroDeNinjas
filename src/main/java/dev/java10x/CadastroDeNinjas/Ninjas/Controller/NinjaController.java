@@ -2,6 +2,8 @@ package dev.java10x.CadastroDeNinjas.Ninjas.Controller;
 
 import dev.java10x.CadastroDeNinjas.Ninjas.DTO.NinjaDTO;
 import dev.java10x.CadastroDeNinjas.Ninjas.Service.NinjaService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,41 +19,57 @@ public class NinjaController {
         this.ninjaService = ninjaService;
     }
 
-    // Endpoint de teste para confirmar que as rotas de ninjas estao respondendo.
+    // Endpoint de teste. Usa ResponseEntity para devolver o texto junto com status HTTP 200.
     @GetMapping("/boasvindas")
-    public String boasVindas() {
+    public ResponseEntity<String> boasVindas() {
         System.out.println("Bem vindo");
-        return "Bem vindo";
+        return ResponseEntity.ok("Bem vindo");
     }
 
-    // POST /ninjas/criar - recebe um DTO, cria um novo ninja e devolve os dados salvos.
+    // POST /ninjas/criar - recebe NinjaDTO, salva como NinjaModel no service e devolve NinjaDTO com status 201.
+    // DTO fica na entrada/saida da API; Model fica escondido no service, mapper e repository.
     @PostMapping("/criar")
-    public NinjaDTO criar(@RequestBody NinjaDTO ninjaDTO) {
-        System.out.println("Criando");
-        return ninjaService.criarNinja(ninjaDTO);
+    public ResponseEntity<NinjaDTO> criar(@RequestBody NinjaDTO ninjaDTO) {
+        NinjaDTO novoNinja = ninjaService.criarNinja(ninjaDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoNinja);
     }
 
-    // GET /ninjas/listar - retorna todos os ninjas cadastrados no banco.
+    // GET /ninjas/listar - devolve lista de NinjaDTO para nao expor a entidade NinjaModel no JSON.
     @GetMapping("/listar")
-    public List<NinjaDTO> listarTodosNinjas() {
-        return ninjaService.listarTodosNinjas();
+    public ResponseEntity<List<NinjaDTO>> listarTodosNinjas() {
+        List<NinjaDTO> ninjas = ninjaService.listarTodosNinjas();
+        return ResponseEntity.ok(ninjas);
     }
 
-    // GET /ninjas/listar/{id} - retorna um ninja especifico a partir do ID informado na URL.
+    // GET /ninjas/listar/{id} - se o service encontrar, devolve NinjaDTO com 200; se nao, devolve 404.
     @GetMapping("/listar/{id}")
-    public NinjaDTO mostrarNinjaPorId(@PathVariable Long id) {
-        return ninjaService.mostrarNinjasPorId(id);
+    public ResponseEntity<NinjaDTO> mostrarNinjaPorId(@PathVariable Long id) {
+        NinjaDTO ninja = ninjaService.mostrarNinjasPorId(id);
+
+        if (ninja == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(ninja);
     }
 
-    // PUT /ninjas/alterar/{id} - atualiza todos os dados de um ninja existente.
+    // PUT /ninjas/alterar/{id} - recebe NinjaDTO, atualiza o registro e devolve DTO atualizado com 200.
+    // TODO: quando virar PATCH, permitir atualizar apenas os campos enviados.
     @PutMapping("/alterar/{id}")
-    public NinjaDTO alterarNinjaPorId(@PathVariable Long id, @RequestBody NinjaDTO ninjaAtualizado) {
-        return ninjaService.alterarNinja(id, ninjaAtualizado);
+    public ResponseEntity<NinjaDTO> alterarNinjaPorId(@PathVariable Long id, @RequestBody NinjaDTO ninjaAtualizado) {
+        NinjaDTO ninja = ninjaService.alterarNinja(id, ninjaAtualizado);
+
+        if (ninja == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(ninja);
     }
 
-    // DELETE /ninjas/deletar/{id} - remove um ninja existente pelo ID informado na URL.
+    // DELETE /ninjas/deletar/{id} - remove o ninja e devolve 204, indicando sucesso sem corpo de resposta.
     @DeleteMapping("/deletar/{id}")
-    public void deletarNinjaPorId(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarNinjaPorId(@PathVariable Long id) {
         ninjaService.deleteNinjaById(id);
+        return ResponseEntity.noContent().build();
     }
 }

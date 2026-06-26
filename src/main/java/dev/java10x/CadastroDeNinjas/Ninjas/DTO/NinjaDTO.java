@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 public class NinjaDTO {
 
     // DTO usado para transportar os dados do ninja sem expor diretamente a entidade JPA.
+    // Este objeto fica na borda da API: entra pelo Controller e volta como resposta em JSON.
+    // O NinjaModel nao deve sair no Controller porque ele representa a tabela e os relacionamentos do banco.
     private Long id;
     private String nome;
     private String email;
