@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninjas cadastrados</title>
+    <link rel="stylesheet" th:href="@{/css/ninjas.css}">
+</head>
+<body>
+<main class="page-shell">
+    <section class="page-header">
+        <div>
+            <p class="eyebrow">Cadastro de Ninjas</p>
+            <h1>Ninjas da vila</h1>
+            <p class="subtitle">Tela renderizada pelo controller MVC com Thymeleaf, usando DTOs vindos do service.</p>
+        </div>
+
+        <a class="primary-action" th:href="@{/ninjas/ui/criar}">Cadastrar ninja</a>
+    </section>
+
+    <section class="notice" th:if="${mensagem}">
+        <span th:text="${mensagem}">Operacao realizada com sucesso.</span>
+    </section>
+
+    <section class="summary-grid">
+        <article class="summary-card">
+            <span class="summary-label">Total cadastrado</span>
+            <strong th:text="${totalNinjas}">0</strong>
+            <small>Registros carregados pelo NinjaService</small>
+        </article>
+        <article class="summary-card">
+            <span class="summary-label">Camada usada</span>
+            <strong>DTO</strong>
+            <small>A pagina nao recebe NinjaModel diretamente</small>
+        </article>
+        <article class="summary-card">
+            <span class="summary-label">Rota MVC</span>
+            <strong>/ninjas/ui</strong>
+            <small>Separada da API REST /ninjas</small>
+        </article>
+    </section>
+
+    <section class="content-panel">
+        <div class="panel-heading">
+            <div>
+                <h2>Lista de ninjas</h2>
+                <p>Cada linha abaixo veio de um <code>NinjaDTO</code> preparado pelo service.</p>
+            </div>
+        </div>
+
+        <div class="empty-state" th:if="${#lists.isEmpty(ninjas)}">
+            <h3>Nenhum ninja cadastrado</h3>
+            <p>Cadastre o primeiro ninja para ver a listagem Thymeleaf funcionando.</p>
+            <a class="secondary-action" th:href="@{/ninjas/ui/criar}">Abrir formulario</a>
+        </div>
+
+        <div class="table-wrap" th:unless="${#lists.isEmpty(ninjas)}">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Ninja</th>
+                    <th>Email</th>
+                    <th>Idade</th>
+                    <th>Rank</th>
+                    <th>Missao</th>
+                    <th>Acoes</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ninja : ${ninjas}">
+                    <td th:text="${ninja.id}">1</td>
+                    <td>
+                        <div class="ninja-cell">
+                            <img th:if="${ninja.imgUrl}" th:src="${ninja.imgUrl}" th:alt="${ninja.nome}">
+                            <span th:unless="${ninja.imgUrl}" class="avatar-fallback" th:text="${#strings.substring(ninja.nome, 0, 1)}">N</span>
+                            <strong th:text="${ninja.nome}">Naruto Uzumaki</strong>
+                        </div>
+                    </td>
+                    <td th:text="${ninja.email}">naruto@konoha.com</td>
+                    <td th:text="${ninja.idade}">17</td>
+                    <td><span class="rank-pill" th:text="${ninja.rank}">Genin</span></td>
+                    <td th:text="${ninja.missoesNome ?: 'Sem missao'}">Missao</td>
+                    <td>
+                        <div class="action-row">
+                            <a class="mini-action" th:href="@{/ninjas/ui/detalhar/{id}(id=${ninja.id})}">Ver</a>
+                            <a class="mini-action" th:href="@{/ninjas/ui/editar/{id}(id=${ninja.id})}">Editar</a>
+                            <form th:action="@{/ninjas/ui/deletar/{id}(id=${ninja.id})}" method="post">
+                                <button class="danger-action" type="submit">Remover</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>

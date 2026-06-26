@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do ninja</title>
+    <link rel="stylesheet" th:href="@{/css/ninjas.css}">
+</head>
+<body>
+<main class="page-shell narrow">
+    <section class="page-header">
+        <div>
+            <p class="eyebrow">Detalhe do cadastro</p>
+            <h1 th:text="${ninja.nome}">Naruto Uzumaki</h1>
+            <p class="subtitle">Esta pagina mostra um unico <code>NinjaDTO</code> carregado pelo controller MVC.</p>
+        </div>
+        <a class="secondary-action" th:href="@{/ninjas/ui/listar}">Voltar</a>
+    </section>
+
+    <section class="detail-panel">
+        <div class="detail-hero">
+            <img th:if="${ninja.imgUrl}" th:src="${ninja.imgUrl}" th:alt="${ninja.nome}">
+            <span th:unless="${ninja.imgUrl}" class="detail-fallback" th:text="${#strings.substring(ninja.nome, 0, 1)}">N</span>
+            <div>
+                <span class="rank-pill" th:text="${ninja.rank ?: 'Sem rank'}">Genin</span>
+                <h2 th:text="${ninja.nome}">Naruto Uzumaki</h2>
+                <p th:text="${ninja.email}">naruto@konoha.com</p>
+            </div>
+        </div>
+
+        <dl class="detail-grid">
+            <div>
+                <dt>ID</dt>
+                <dd th:text="${ninja.id}">1</dd>
+            </div>
+            <div>
+                <dt>Idade</dt>
+                <dd th:text="${ninja.idade}">17</dd>
+            </div>
+            <div>
+                <dt>Missao</dt>
+                <dd th:text="${ninja.missoesNome ?: 'Sem missao'}">Resgate do gato perdido</dd>
+            </div>
+            <div>
+                <dt>ID da missao</dt>
+                <dd th:text="${ninja.missoesId ?: 'Sem vinculo'}">1</dd>
+            </div>
+        </dl>
+
+        <div class="form-actions">
+            <a class="primary-action" th:href="@{/ninjas/ui/editar/{id}(id=${ninja.id})}">Editar ninja</a>
+            <form th:action="@{/ninjas/ui/deletar/{id}(id=${ninja.id})}" method="post">
+                <button class="danger-action" type="submit">Remover ninja</button>
+            </form>
+        </div>
+    </section>
+</main>
+</body>
+</html>

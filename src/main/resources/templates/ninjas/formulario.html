@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar ninja</title>
+    <link rel="stylesheet" th:href="@{/css/ninjas.css}">
+</head>
+<body>
+<main class="page-shell narrow">
+    <section class="page-header">
+        <div>
+            <p class="eyebrow">Formulario Thymeleaf</p>
+            <h1 th:text="${tituloFormulario}">Cadastrar ninja</h1>
+            <p class="subtitle">
+                Os campos do formulario preenchem um <code>NinjaDTO</code>.
+                O mesmo template serve para criar e editar.
+            </p>
+        </div>
+        <a class="secondary-action" th:href="@{/ninjas/ui/listar}">Voltar</a>
+    </section>
+
+    <form class="form-panel"
+          th:action="${modoEdicao} ? @{/ninjas/ui/editar/{id}(id=${ninja.id})} : @{/ninjas/ui/criar}"
+          th:object="${ninja}"
+          method="post">
+        <input type="hidden" th:field="*{id}">
+
+        <label>
+            Nome
+            <input type="text" th:field="*{nome}" placeholder="Naruto Uzumaki" required>
+        </label>
+
+        <label>
+            Email
+            <input type="email" th:field="*{email}" placeholder="naruto@konoha.com" required>
+        </label>
+
+        <div class="form-grid">
+            <label>
+                Idade
+                <input type="number" th:field="*{idade}" min="0" placeholder="17" required>
+            </label>
+
+            <label>
+                Rank
+                <input type="text" th:field="*{rank}" placeholder="Genin">
+            </label>
+        </div>
+
+        <label>
+            URL da imagem
+            <input type="url" th:field="*{imgUrl}" placeholder="https://exemplo.com/ninja.png">
+        </label>
+
+        <label>
+            Missao
+            <select th:field="*{missoesId}">
+                <option value="">Sem missao</option>
+                <option th:each="missao : ${missoes}" th:value="${missao.id}" th:text="${missao.nome}">Missao</option>
+            </select>
+        </label>
+
+        <div class="form-actions">
+            <button class="primary-action" type="submit" th:text="${textoBotao}">Salvar ninja</button>
+            <a class="secondary-action" th:href="@{/ninjas/ui/listar}">Cancelar</a>
+        </div>
+    </form>
+</main>
+</body>
+</html>

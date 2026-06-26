@@ -2,10 +2,7 @@ package dev.java10x.CadastroDeNinjas.Ninjas.Model;
 
 import dev.java10x.CadastroDeNinjas.Missoes.Model.MissoesModel;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
@@ -13,6 +10,7 @@ import lombok.Setter;
 @Table(name = "tb_cadastro_de_ninjas")
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = "missoes")
 public class NinjaModel {
 
     // Identificador unico do ninja. O banco gera esse valor automaticamente.
@@ -31,7 +29,7 @@ public class NinjaModel {
     @Column(name = "idade")
     private int idade;
 
-    @Column(name = "imgUrl")
+    @Column(name = "img_url")
     private String imgUrl;
 
     @Column(name = "rank")
