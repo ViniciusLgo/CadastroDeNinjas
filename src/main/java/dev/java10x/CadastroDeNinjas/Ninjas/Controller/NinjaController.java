@@ -27,7 +27,6 @@ public class NinjaController {
     }
 
     // POST /ninjas/criar - recebe NinjaDTO, salva como NinjaModel no service e devolve NinjaDTO com status 201.
-    // DTO fica na entrada/saida da API; Model fica escondido no service, mapper e repository.
     @PostMapping("/criar")
     public ResponseEntity<NinjaDTO> criar(@RequestBody NinjaDTO ninjaDTO) {
         NinjaDTO novoNinja = ninjaService.criarNinja(ninjaDTO);
@@ -53,7 +52,6 @@ public class NinjaController {
         return ResponseEntity.ok(ninja);
     }
 
-    // PUT /ninjas/alterar/{id} - recebe NinjaDTO, atualiza o registro e devolve DTO atualizado com 200.
     // TODO: quando virar PATCH, permitir atualizar apenas os campos enviados.
     @PutMapping("/alterar/{id}")
     public ResponseEntity<NinjaDTO> alterarNinjaPorId(@PathVariable Long id, @RequestBody NinjaDTO ninjaAtualizado) {
